@@ -98,13 +98,13 @@ const Navbar = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex gap-3">
-            <button className="relative overflow-hidden px-6 py-2 rounded-full border border-blue-600 text-blue-600 hover:text-white transition duration-300 cursor-pointer group">
+            <button className="relative overflow-hidden px-6 py-2 rounded-sm border border-blue-600 text-blue-600 hover:text-white transition duration-300 cursor-pointer group">
               <span className="relative z-10">Login</span>
-              <span className="absolute inset-0 rounded-full bg-blue-600 scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+              <span className="absolute inset-0 rounded-sm bg-blue-600 scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
             </button>
-            <button className="relative overflow-hidden px-6 py-2 rounded-full bg-blue-600 text-white hover:text-blue-600 transition duration-300 cursor-pointer group">
+            <button className="relative overflow-hidden px-6 py-2 rounded-sm bg-blue-600 text-white hover:text-blue-600 transition duration-300 cursor-pointer group">
               <span className="relative z-10">Get Started</span>
-              <span className="absolute inset-0 rounded-full bg-white scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+              <span className="absolute inset-0 rounded-sm bg-white scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
             </button>
           </div>
 
@@ -187,7 +187,7 @@ const Navbar = () => {
                   transition: { duration: 0.2 }
                 }}
                 onClick={toggleMenu}
-                className="absolute top-6 right-6 z-[70] w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors duration-200 shadow-lg"
+                className="absolute top-6 right-6 z-[70] w-12 h-12 rounded-full bg-gray-300 hover:bg-gray-200 flex items-center justify-center transition-colors duration-200 shadow-lg"
               >
                 <HiX className="text-2xl text-gray-700" />
               </motion.button>
@@ -255,10 +255,10 @@ const Navbar = () => {
                   }}
                   className="flex flex-col gap-4 w-64"
                 >
-                  <button className="w-full py-3 px-6 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition duration-300 font-medium">
+                  <button className="w-full py-3 px-6 rounded-sm border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition duration-300 font-medium">
                     Login
                   </button>
-                  <button className="w-full py-3 px-6 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition duration-300 font-medium">
+                  <button className="w-full py-3 px-6 rounded-sm bg-blue-600 text-white hover:bg-blue-700 transition duration-300 font-medium">
                     Get Started
                   </button>
                 </motion.div>
