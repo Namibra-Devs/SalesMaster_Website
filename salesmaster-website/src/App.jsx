@@ -1,4 +1,5 @@
 import Benefits from "./components/Benefits";
+import ContactSection from "./components/ContactSection";
 import Intro from "./components/Intro";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
@@ -13,12 +14,9 @@ function App() {
       <Benefits />
 
       <Pricing />
-      <section
-        id="contact"
-        className="h-screen flex items-center justify-center bg-slate-100"
-      >
-        <h1 className="text-4xl font-bold">Contact Us Section</h1>
-      </section>
+    
+    <ContactSection />
+    
     </div>
   );
 }
