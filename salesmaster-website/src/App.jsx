@@ -1,7 +1,7 @@
 import Benefits from "./components/Benefits";
 import Intro from "./components/Intro";
-
 import Navbar from "./components/Navbar";
+import Pricing from "./components/Pricing";
 
 function App() {
   return (
@@ -12,13 +12,7 @@ function App() {
 
       <Benefits />
 
-      <section
-        id="pricing"
-        className="h-screen flex items-center justify-center bg-white"
-      >
-        <h1 className="text-4xl font-bold">Pricing Section</h1>
-      </section>
-
+      <Pricing />
       <section
         id="contact"
         className="h-screen flex items-center justify-center bg-slate-100"
