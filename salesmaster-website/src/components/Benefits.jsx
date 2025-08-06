@@ -327,7 +327,7 @@ const Benefits = () => {
             </div>
 
             {/* Payment Card */}
-            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
                 Payment
               </h2>
