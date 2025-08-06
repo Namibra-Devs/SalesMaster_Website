@@ -1,5 +1,6 @@
 import Benefits from "./components/Benefits";
 import ContactSection from "./components/ContactSection";
+import Footer from "./components/Footer";
 import Intro from "./components/Intro";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
@@ -16,6 +17,8 @@ function App() {
       <Pricing />
     
     <ContactSection />
+
+    <Footer />
     
     </div>
   );
