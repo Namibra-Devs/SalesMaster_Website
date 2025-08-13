@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Intro from "./components/Intro";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
+import Reviews from "./components/Reviews";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
 
       <Pricing />
     
+    <Reviews />
+
+
     <ContactSection />
 
     <Footer />

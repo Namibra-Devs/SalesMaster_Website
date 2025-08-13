@@ -49,7 +49,7 @@ const Pricing = () => {
   };
 
   return (
-    <section id="pricing" className="py-20 px-4 bg-gray-50">
+    <section id="pricing" className="py-2 px-4 bg-gray-50">
       <Toaster position="top-right" />
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
