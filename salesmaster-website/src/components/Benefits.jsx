@@ -1,13 +1,226 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { CheckCircle } from "lucide-react";
 import { Toaster, toast } from "react-hot-toast";
-import reportImg from "../assets/images/report.png";
+import Chart from 'chart.js/auto';
 import inventoryImg from "../assets/images/inventory-panel.png";
 
+const SalesDashboardForm = ({ openModal, cartItems }) => {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [formData, setFormData] = useState({
+    dateRange: 'monthly',
+    region: 'all',
+    product: 'all',
+  });
+  const chartRef = useRef(null);
+
+  const iphoneSalesData = {
+    labels: ['iPhone 15 Pro', 'iPhone 14', 'iPhone 13', 'iPhone SE'],
+    datasets: [
+      {
+        label: 'Sales Distribution (GH₵)',
+        data: [30000, 20000, 15000, 10000],
+        backgroundColor: [
+          'rgba(59, 130, 246, 0.8)',
+          'rgba(34, 197, 94, 0.8)',
+          'rgba(255, 206, 86, 0.8)',
+          'rgba(153, 102, 255, 0.8)',
+        ],
+        borderColor: [
+          'rgba(59, 130, 246, 1)',
+          'rgba(34, 197, 94, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(153, 102, 255, 1)',
+        ],
+        borderWidth: 1,
+      },
+      {
+        label: 'Quantity Sold',
+        data: [120, 100, 80, 50],
+        backgroundColor: [
+          'rgba(59, 130, 246, 0.5)',
+          'rgba(34, 197, 94, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+        ],
+        borderColor: [
+          'rgba(59, 130, 246, 1)',
+          'rgba(34, 197, 94, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(153, 102, 255, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const initializeChart = () => {
+    const ctx = document.getElementById('salesChart')?.getContext('2d');
+    if (ctx && !chartRef.current) {
+      chartRef.current = new Chart(ctx, {
+        type: 'pie',
+        data: iphoneSalesData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => `${context.label}: ${context.raw}`,
+              },
+            },
+          },
+          animation: {
+            duration: 2000,
+            easing: 'easeInOutBounce',
+          },
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    toast.success(`Filtering data for ${formData.dateRange} - ${formData.region} - ${formData.product}`, { duration: 2000 });
+    openModal(`Filtered data: ${formData.dateRange}, ${formData.region}, ${formData.product}`);
+  };
+
+  const totalSales = iphoneSalesData.datasets[0].data.reduce((sum, value) => sum + value, 0);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return (
+          <motion.div
+            key="overview"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5 }}
+            onAnimationComplete={() => {
+              if (activeTab === 'overview') {
+                initializeChart();
+              }
+            }}
+            className="p-4"
+          >
+            <h3 className="text-xl font-bold text-gray-800">iPhone Sales Overview</h3>
+            <canvas id="salesChart" className="w-full h-64"></canvas>
+            <p className="text-gray-600 mt-4">Total Sales: GH₵{totalSales.toFixed(2)}</p>
+            <p className="text-gray-600">Models Sold: {iphoneSalesData.labels.length}</p>
+          </motion.div>
+        );
+      case 'analytics':
+        return (
+          <motion.div
+            key="analytics"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5 }}
+            className="p-4"
+          >
+            <h3 className="text-xl font-bold text-gray-800">iPhone Sales Analytics</h3>
+            <p className="text-gray-600">Top Model: iPhone 15 Pro (30% of sales)</p>
+            <p className="text-gray-600">Average Order Value: GH₵{(totalSales / iphoneSalesData.labels.length).toFixed(2)}</p>
+            <p className="text-gray-600">Models in Distribution: {iphoneSalesData.labels.length}</p>
+          </motion.div>
+        );
+      case 'details':
+        return (
+          <motion.div
+            key="details"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5 }}
+            className="p-4"
+          >
+            <h3 className="text-xl font-bold text-gray-800">Details Analytics</h3>
+            <p className="text-gray-600">Customer Retention: 82% </p>
+            <p className="text-gray-600">Churn Rate: 5% </p>
+            <p className="text-gray-600">New Customers: 1,200 this month </p>
+          </motion.div>
+        );
+      case 'report':
+        return (
+          <motion.div
+            key="report"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5 }}
+            className="p-4"
+          >
+            <h3 className="text-xl font-bold text-gray-800">Sales Report</h3>
+            <p className="text-gray-600">Downloadable PDF reports available</p>
+            <p className="text-gray-600">Weekly performance summaries</p>
+            <button
+              onClick={() => {
+                toast.success("Generating report...", { duration: 1500 });
+                openModal("Downloading report...");
+              }}
+              className="px-4 py-2 mt-4 text-sm rounded-sm bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
+            >
+              Download Report
+            </button>
+          </motion.div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="w-full rounded-xl shadow-md bg-white p-4 border border-gray-100">
+      <div className="flex border-b border-gray-200">
+        {['overview', 'analytics', 'details', 'report'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => {
+              if (chartRef.current) {
+                chartRef.current.destroy();
+                chartRef.current = null;
+              }
+              setActiveTab(tab);
+            }}
+            className={`px-4 py-2 text-sm font-medium ${
+              activeTab === tab
+                ? 'border-b-2 border-blue-600 text-blue-600'
+                : 'text-gray-600 hover:text-blue-600'
+            }`}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </button>
+        ))}
+      </div>
+      <div className="p-4">
+        <AnimatePresence mode="wait">
+          {renderTabContent()}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
 const Benefits = () => {
-  // State for interactivity
   const [searchQuery, setSearchQuery] = useState("");
   const [cartItems, setCartItems] = useState([
     {
@@ -25,7 +238,11 @@ const Benefits = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
-  // Handlers
+  const openModal = (content) => {
+    setModalContent(content);
+    setIsModalOpen(true);
+  };
+
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
     if (e.target.value) {
@@ -80,12 +297,6 @@ const Benefits = () => {
     setPaymentMethod("Payment Method");
   };
 
-  const openModal = (content) => {
-    setModalContent(content);
-    setIsModalOpen(true);
-  };
-
-  // Calculate order summary
   const orderDiscount = 20;
   const subTotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -97,11 +308,11 @@ const Benefits = () => {
   return (
     <section id="benefits" className="w-full py-20 bg-gray-50">
       <Toaster position="top-right" />
-      <h1 className="text-center text-5xl mb-10 font-bold text-gray-800">
-        Why Choose Our Platform
-      </h1>
+     <h1 className="text-center text-3xl sm:text-5xl mb-10 font-bold text-gray-800">
+  The Sales Advantage You Deserve
+</h1>
+
       <div className="max-w-7xl mx-auto px-4 flex flex-col gap-20">
-        {/* Top Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -109,7 +320,6 @@ const Benefits = () => {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-10"
         >
-          {/* Left - Forms */}
           <div className="flex flex-col gap-6">
             <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
               <div className="flex items-center justify-between mb-4">
@@ -158,7 +368,7 @@ const Benefits = () => {
                 <div key={item.id} className="mb-4">
                   <div className="flex justify-between mb-1">
                     <span className="text-gray-700">{item.name}</span>
-                    <span className="text-gray-700">${item.price}</span>
+                    <span className="text-gray-700">GH₵{item.price}</span>
                   </div>
                   <div className="text-xs text-gray-500 mb-2">
                     {item.serial}
@@ -180,7 +390,7 @@ const Benefits = () => {
                   </div>
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-red-500">Discount</span>
-                    <span className="text-gray-600">$50</span>
+                    <span className="text-gray-600">GH₵50</span>
                   </div>
                   <div className="flex justify-between items-center text-sm mt-2">
                     <span className="text-red-500">Tracked Item</span>
@@ -191,9 +401,7 @@ const Benefits = () => {
             </div>
           </div>
 
-          {/* Right - Cards */}
           <div className="flex flex-col gap-6">
-            {/* POS Info */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -228,9 +436,8 @@ const Benefits = () => {
               </button>
             </motion.div>
 
-            {/* Customer Card */}
             <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-              <div className="flex items-center gap-2 mb-4 ">
+              <div className="flex items-center gap-2 mb-4">
                 <CheckCircle className="text-green-500 w-5 h-5" />
                 <h2 className="text-lg font-semibold text-gray-800">
                   Customer Card
@@ -288,11 +495,10 @@ const Benefits = () => {
                 className="relative overflow-hidden px-4 py-2 text-sm mt-3 rounded-sm bg-blue-600 text-white hover:text-[#4386f1] transition duration-200 cursor-pointer w-fit group"
               >
                 <span className="relative z-10">+ New</span>
-                <span className="absolute inset-0 bg-white  scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
+                <span className="absolute inset-0 bg-white scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
               </button>
             </div>
 
-            {/* Order Summary */}
             <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
                 Order Summary
@@ -309,7 +515,7 @@ const Benefits = () => {
               <div className="text-sm text-gray-600">
                 <div className="flex justify-between mb-1">
                   <span>Order Discount</span>
-                  <span>${orderDiscount}</span>
+                  <span>GH₵{orderDiscount}</span>
                 </div>
                 <div className="flex justify-between mb-1">
                   <span>Sub Total</span>
@@ -317,16 +523,15 @@ const Benefits = () => {
                 </div>
                 <div className="flex justify-between mb-1">
                   <span>Tax</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <span>GH₵{tax.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-bold">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>GH₵{total.toFixed(2)}</span>
                 </div>
               </div>
             </div>
 
-            {/* Payment Card */}
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
                 Payment
@@ -375,6 +580,21 @@ const Benefits = () => {
                         </div>
                       )}
                     </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <div
+                          onClick={() => {
+                            setPaymentMethod("Mobile Money");
+                            toast.success("Payment method set to MoMo", {
+                              duration: 1500,
+                            });
+                          }}
+                          className={`px-4 py-2 text-sm ${active ? "bg-blue-100" : ""}`}
+                        >
+                         Mobile Money
+                        </div>
+                      )}
+                    </Menu.Item>
                   </Menu.Items>
                 </Transition>
               </Menu>
@@ -390,16 +610,14 @@ const Benefits = () => {
                 className="relative overflow-hidden px-4 py-2 text-sm my-2 rounded-sm bg-blue-600 text-white hover:text-[#4386f1] transition duration-200 cursor-pointer w-fit group"
               >
                 <span className="relative z-10">+ Add Payment</span>
-                <span className="absolute inset-0 bg-white  scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
+                <span className="absolute inset-0 bg-white scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
               </button>
-
               <div className="flex justify-between font-semibold">
                 <span>Total Paid</span>
-                <span>${total.toFixed(2)}</span>
+                <span>GH₵{total.toFixed(2)}</span>
               </div>
             </div>
 
-            {/* Order Notes */}
             <textarea
               placeholder="Order Notes"
               value={orderNotes}
@@ -417,7 +635,6 @@ const Benefits = () => {
           </div>
         </motion.div>
 
-        {/* Middle Section */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -425,10 +642,8 @@ const Benefits = () => {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-10 items-center"
         >
-          {/* Left - Info */}
-          <div className="flex flex-col gap-8 ">
+          <div className="flex flex-col gap-8">
             <CheckCircle className="text-green-600 w-20 h-20" />
-
             <div className="p-4 bg-[#E3F0F8] rounded-sm">
               <h3 className="text-2xl font-bold text-gray-800">
                 Inventory Management
@@ -445,25 +660,21 @@ const Benefits = () => {
               Full support for barcode scanning and SKU management.
             </p>
             <button
-              onClick={() =>
-                openModal("Explore inventory management features!")
-              }
+              onClick={() => openModal("Explore inventory management features!")}
               className="relative overflow-hidden px-4 py-2 text-sm my-2 rounded-sm bg-blue-600 text-white hover:text-[#4386f1] transition duration-200 cursor-pointer w-fit group"
             >
               <span className="relative z-10">Manage Inventory</span>
-              <span className="absolute inset-0 bg-white  scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
+              <span className="absolute inset-0 bg-white scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
             </button>
           </div>
 
-          {/* Right - Image */}
           <img
+            className="w-full rounded-xl shadow-md"
             src={inventoryImg}
             alt="Inventory Admin Panel"
-            className="w-full rounded-xl shadow-md"
           />
         </motion.div>
 
-        {/* Bottom Section */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -471,14 +682,8 @@ const Benefits = () => {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-10 items-center"
         >
-          {/* Left - Image */}
-          <img
-            src={reportImg}
-            alt="Reporting Image"
-            className="w-full rounded-xl shadow-md"
-          />
+          <SalesDashboardForm openModal={openModal} cartItems={cartItems} />
 
-          {/* Right - Info */}
           <div className="flex flex-col gap-8">
             <CheckCircle className="text-green-600 w-20 h-20" />
             <div className="p-4 bg-[#E3F0F8] rounded-sm">
@@ -500,13 +705,12 @@ const Benefits = () => {
               className="relative overflow-hidden px-4 py-2 text-sm my-2 rounded-sm bg-blue-600 text-white hover:text-[#4386f1] transition duration-200 cursor-pointer w-fit group"
             >
               <span className="relative z-10">View Reports</span>
-              <span className="absolute inset-0 bg-white  scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
+              <span className="absolute inset-0 bg-white scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-sm z-0" />
             </button>
           </div>
         </motion.div>
       </div>
 
-      {/* Modal */}
       <Transition appear show={isModalOpen} as={React.Fragment}>
         <Dialog
           as="div"
