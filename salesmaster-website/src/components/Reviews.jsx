@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
 
 // Import local images (place these in /src/assets/images)
-import review1 from "../assets/images/review1.jpg";
-import review2 from "../assets/images/review2.png";
-import review3 from "../assets/images/review3.png";
-import review4 from "../assets/images/review4.png";
+import review3 from "../assets/images/review1.jpg";
+import review1 from "../assets/images/profile5.webp";
+import review2 from "../assets/images/profile7.jpeg";
+import review4 from "../assets/images/profile9.jpg";
 
 // Review data
 const reviews = [
   {
-    name: "Kofi Johnson",
+    name: "Mr. Bright Abel",
     role: "Marketing Manager",
     image: review1,
     rating: 5,
@@ -17,7 +17,7 @@ const reviews = [
       "SalesMaster completely transformed how we track our sales. The animations and analytics make it a joy to use daily!",
   },
   {
-    name: "Michael Grace",
+    name: "Boakye Grace",
     role: "Client",
     image: review2,
     rating: 4,
@@ -25,7 +25,7 @@ const reviews = [
       "The dashboard is sleek and intuitive. Our team adoption rate was instant thanks to the great user experience.",
   },
   {
-    name: "Edward Kwame",
+    name: "Abdul Halim",
     role: "Product Designer",
     image: review3,
     rating: 5,
@@ -33,7 +33,7 @@ const reviews = [
       "I love how smooth everything feels. The attention to detail in animations makes the app stand out.",
   },
   {
-    name: "Daniel Ama",
+    name: "Helina Andoh",
     role: "Sales Director",
     image: review4,
     rating: 4,
