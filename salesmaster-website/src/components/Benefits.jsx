@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, BarChart, DollarSign, Package, Users, TrendingDown, UserPlus } from "lucide-react";
 import { Toaster, toast } from "react-hot-toast";
 import Chart from 'chart.js/auto';
 import inventoryImg from "../assets/images/inventory-panel.png";
@@ -103,6 +103,9 @@ const SalesDashboardForm = ({ openModal, cartItems }) => {
   };
 
   const totalSales = iphoneSalesData.datasets[0].data.reduce((sum, value) => sum + value, 0);
+  const topModelIndex = iphoneSalesData.datasets[0].data.indexOf(Math.max(...iphoneSalesData.datasets[0].data));
+  const topModel = iphoneSalesData.labels[topModelIndex];
+  const topPercentage = ((iphoneSalesData.datasets[0].data[topModelIndex] / totalSales) * 100).toFixed(0);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -137,10 +140,30 @@ const SalesDashboardForm = ({ openModal, cartItems }) => {
             transition={{ duration: 0.5 }}
             className="p-4"
           >
-            <h3 className="text-xl font-bold text-gray-800">iPhone Sales Analytics</h3>
-            <p className="text-gray-600">Top Model: iPhone 15 Pro (30% of sales)</p>
-            <p className="text-gray-600">Average Order Value: GH₵{(totalSales / iphoneSalesData.labels.length).toFixed(2)}</p>
-            <p className="text-gray-600">Models in Distribution: {iphoneSalesData.labels.length}</p>
+            <h3 className="text-xl font-bold text-gray-800 mb-4">iPhone Sales Analytics</h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                <BarChart className="text-blue-500 w-6 h-6" />
+                <div>
+                  <p className="text-sm text-gray-500">Top Model</p>
+                  <p className="font-semibold">{topModel} ({topPercentage}% of sales)</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                <DollarSign className="text-green-500 w-6 h-6" />
+                <div>
+                  <p className="text-sm text-gray-500">Average Order Value</p>
+                  <p className="font-semibold">GH₵{(totalSales / iphoneSalesData.labels.length).toFixed(2)}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                <Package className="text-purple-500 w-6 h-6" />
+                <div>
+                  <p className="text-sm text-gray-500">Models in Distribution</p>
+                  <p className="font-semibold">{iphoneSalesData.labels.length}</p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         );
       case 'details':
@@ -153,10 +176,30 @@ const SalesDashboardForm = ({ openModal, cartItems }) => {
             transition={{ duration: 0.5 }}
             className="p-4"
           >
-            <h3 className="text-xl font-bold text-gray-800">Details Analytics</h3>
-            <p className="text-gray-600">Customer Retention: 82% </p>
-            <p className="text-gray-600">Churn Rate: 5% </p>
-            <p className="text-gray-600">New Customers: 1,200 this month </p>
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Details Analytics</h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                <Users className="text-indigo-500 w-6 h-6" />
+                <div>
+                  <p className="text-sm text-gray-500">Customer Retention</p>
+                  <p className="font-semibold">82%</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                <TrendingDown className="text-red-500 w-6 h-6" />
+                <div>
+                  <p className="text-sm text-gray-500">Churn Rate</p>
+                  <p className="font-semibold">5%</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                <UserPlus className="text-green-500 w-6 h-6" />
+                <div>
+                  <p className="text-sm text-gray-500">New Customers</p>
+                  <p className="font-semibold">1,200 this month</p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         );
       case 'report':
