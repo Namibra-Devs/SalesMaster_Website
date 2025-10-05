@@ -5,6 +5,7 @@ import Intro from "./components/Intro";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
 import Reviews from "./components/Reviews";
+import About from "./components/About";
 
 function App() {
   return (
@@ -13,17 +14,17 @@ function App() {
 
       <Intro />
 
+      <About />
+
       <Benefits />
 
       <Pricing />
-    
-    <Reviews />
 
+      <Reviews />
 
-    <ContactSection />
+      <ContactSection />
 
-    <Footer />
-    
+      <Footer />
     </div>
   );
 }
