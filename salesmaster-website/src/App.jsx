@@ -7,6 +7,7 @@ import Pricing from "./components/Pricing";
 import Reviews from "./components/Reviews";
 import About from "./components/About";
 import FAQ from "./components/FAQ";
+import CTA from "./components/CTA";
 import Features from "./components/Features";
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
       <Pricing />
 
       <FAQ />
-<Features />
+      <Features />
+      <CTA />
       <Reviews />
 
       <ContactSection />
