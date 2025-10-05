@@ -182,15 +182,15 @@ const About = () => {
 
               {/* Additional Video Features - Mobile optimized */}
               <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-2 sm:gap-4 text-center">
-                <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
+                <div className="p-2 sm:p-3 bg-blue-100 rounded-lg">
                   <div className="text-xs sm:text-sm font-semibold text-gray-900">Easy Setup</div>
                   <div className="text-xs text-gray-600">5 minutes</div>
                 </div>
-                <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
+                <div className="p-2 sm:p-3 bg-blue-100 rounded-lg">
                   <div className="text-xs sm:text-sm font-semibold text-gray-900">Free Trial</div>
                   <div className="text-xs text-gray-600">No card needed</div>
                 </div>
-                <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
+                <div className="p-2 sm:p-3 bg-blue-100 rounded-lg">
                   <div className="text-xs sm:text-sm font-semibold text-gray-900">Support</div>
                   <div className="text-xs text-gray-600">24/7 help</div>
                 </div>

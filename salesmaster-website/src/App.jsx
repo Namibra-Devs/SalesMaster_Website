@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
 import Reviews from "./components/Reviews";
 import About from "./components/About";
+import FAQ from "./components/FAQ";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
       <Benefits />
 
       <Pricing />
+
+      <FAQ />
 
       <Reviews />
 
