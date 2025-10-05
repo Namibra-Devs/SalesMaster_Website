@@ -53,7 +53,7 @@ const FAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
+          className="text-left mb-12 md:mb-16"
         >
           <h2 className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">
             FAQs
@@ -61,8 +61,8 @@ const FAQ = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Get answers to common questions about SalesMaster setup, features, and pricing.
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl">
+            Get answers to common questions about SalesMaster setup, features and pricing.
           </p>
         </motion.div>
 
