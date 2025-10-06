@@ -9,6 +9,7 @@ import About from "./components/About";
 import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
 import Features from "./components/Features";
+import Partners from "./components/Partners";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
 
       <FAQ />
       <Features />
+      <Partners />
       <CTA />
       <Reviews />
 

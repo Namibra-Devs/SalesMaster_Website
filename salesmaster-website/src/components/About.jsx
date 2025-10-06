@@ -114,7 +114,7 @@ const About = () => {
                 </p>
               </div>
 
-              <Parallax speed={-5}>
+              
                 <div className="relative rounded-xl lg:rounded-2xl overflow-hidden shadow-lg lg:shadow-2xl group">
                   <video
                     ref={videoRef}
@@ -178,7 +178,7 @@ const About = () => {
                     </p>
                   </div>
                 </div>
-              </Parallax>
+              
 
               {/* Additional Video Features - Mobile optimized */}
               <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-2 sm:gap-4 text-center">
