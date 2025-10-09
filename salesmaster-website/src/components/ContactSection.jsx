@@ -146,7 +146,7 @@ const ContactSection = () => {
           <h3 className="text-2xl font-semibold mb-6">
             Love to hear from you! <br /> Get in touch 👋
           </h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} action="https://formsubmit.co/sales@namibra.io" method="POST" className="space-y-4">
             <div>
               <input
                 type="text"
@@ -181,6 +181,7 @@ const ContactSection = () => {
                 className="w-full px-4 py-3 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 transition-all duration-300 resize-none"
               ></textarea>
             </div>
+            <input type="hidden" name="_autoresponse" value="SalesMaster will get in touch with you soon!"></input>
 
             <motion.button
               type="submit"
